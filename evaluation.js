@@ -12,7 +12,7 @@ class Evaluation {
 	}
 
 	/**
-	 * 
+	 *
 	 * questionId: optionId
 	 * {
 	 * 	q1: 2,
@@ -20,7 +20,7 @@ class Evaluation {
 	 * 	q3: 1,
 	 *  ...
 	 * }
-	 * @param {[string]: number} answers 
+	 * @param {[string]: number} answers
 	 */
 	async evaluate(answers) {
 		try {
@@ -35,8 +35,8 @@ class Evaluation {
 				} else {
 					if(question.options[answerOption]===undefined){
 						throw Error('question definition does not have option '+ answerOption)
-					} 
-					note+=question.options[answerOption].text + '\n'
+					}
+					note+="> " + question.options[answerOption].text + '\n'
 					medical_priority+=question.options[answerOption].value || 0
 				}
 			})
