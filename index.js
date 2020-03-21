@@ -87,7 +87,7 @@ app.post('/ticket', async (req, res) => {
 			"group": "Users",
 			"customer_id": user.id,
 			"article": {
-				"subject": "Corona Fragen",
+				"subject": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
 				"body": note,
 				"type": "note",
 				"internal": false
