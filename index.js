@@ -70,13 +70,16 @@ app.post('/ticket', async (req, res) => {
 			},
 			med_prio: medical_priority,
 		})
+
+		console.log(response);
+
 		res.json({
 			id: response.id,
 			priority: response.priority_id
 		})
 	} catch (error) {
 		console.error(error)
-		res.status(500).send(error.message)
+		res.status(500).json({error: error.message});
 	}
 })
 
