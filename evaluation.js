@@ -33,10 +33,11 @@ class Evaluation {
 					// note+='  --- keine antwort --- \n'
 				} else {
 					note += question.text + '\n'
-					const answerValue = question.options.filter(option=>option.id===answerOption)
-					if(answerValue===undefined){
+					const answerValues = question.options.filter(option=>option.id===answerOption)
+					if(answerValues.length===undefined){
 						throw Error('question definition does not have option '+ answerOption)
 					}
+					const answerValue = answerValues[0]
 					note+="> " + answerValue.text + '\n'
 					medical_priority+=answerValue.value || 0
 				}
