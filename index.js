@@ -18,6 +18,26 @@ zammad.listUsers()
 app.get('/', (req, res) => {
 	res.json({});
 });
+
+/**
+ * Create new ticket
+ * 
+ * POST with body:
+ * 
+ * {
+ * 	meta: {
+ * 		firstname: string,
+ * 		lastname: string,
+ * 		phone: string
+ * 	},
+ * 	answers: {
+ * 		q1: 2,
+ * 		q2: 3,
+ * 		q3: 2,
+ * 		...
+ * 	}
+ * }
+ */
 app.post('/ticket', async (req, res) => {
 
 	try {
@@ -26,12 +46,15 @@ app.post('/ticket', async (req, res) => {
 
 		//TODO: validate answers
 		let answers = req.body.answers
+		assert.ok(answers, 'answers not present')
+
 
 		assert.ok(user, 'meta not present')
 		assert.ok(user.phone, 'phone not present')
 		user = await zammad.createUser(user)
 
 		const { medical_priority, note } = await eval.evaluate(answers)
+		console.info(`medical score ${medical_priority}`)
 
 		const response = await zammad.createTicket({
 			"title": "Corona Test",

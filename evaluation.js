@@ -3,32 +3,52 @@ const superagent = require('superagent');
 class Evaluation {
 	constructor() {
 		this.question_url = process.env.QUESTION_API_URL || "";
-		console.debug("Connecting to question metadata at "+this.question_url);
+		console.debug("Connecting to question metadata at " + this.question_url);
 		this.questions = {};
 	}
 
-	_getQuestions() {
-		return superagent.get(this.question_url).then((res) => {
-			if(res.body) {
-				this.questions = res.body;
-			} else {
-				throw Error("Invalid question body");
-			}
-		});
+	getQuestions() {
+		return superagent.get(this.question_url).then(res => res.body)
 	}
 
-	evaluate(answers) {
-		this._getQuestions().then(() => {
-			console.log(this.questions);
-			const r = {};
-			r["note"] = "Schön formatierte Informationen";
-			r["medical_priority"] = 142;
-			return r;
-		}).catch((err) => {
+	/**
+	 * 
+	 * questionId: optionId
+	 * {
+	 * 	q1: 2,
+	 * 	q2: 3,
+	 * 	q3: 1,
+	 *  ...
+	 * }
+	 * @param {[string]: number} answers 
+	 */
+	async evaluate(answers) {
+		try {
+			const questions = await this.getQuestions()
+			let note = ''
+			let medical_priority = 0
+			questions.forEach(question => {
+				note += question.text + '\n'
+				const answerOption  = answers[question.id]
+				if (answerOption===undefined) {
+					note+='  --- keine antwort --- \n'
+				} else {
+					if(question.options[answerOption]===undefined){
+						throw Error('question definition does not have option '+ answerOption)
+					} 
+					note+=question.options[answerOption].text + '\n'
+					medical_priority+=question.options[answerOption].value || 0
+				}
+			})
+			return {
+				note,
+				medical_priority,
+			};
+		} catch (err) {
 			console.error("Error getting Question Metadata!");
 			console.error(err);
-			throw Error(err);
-		});
+			throw Error(err.message);
+		}
 	}
 }
 
