@@ -1,5 +1,10 @@
 const superagent = require('superagent');
 
+let tagParameters = [];
+// Influenza 1
+tagParameters.push({name: "Influenza", condition: [{"q31":"answer_yes"},{"q26":"answer_yes"}]});
+
+
 class Evaluation {
 	constructor() {
 		this.question_url = process.env.QUESTION_API_URL || "";
@@ -28,6 +33,7 @@ class Evaluation {
 			let tags = [];
 			let note = ''
 			let medical_priority = 0
+			// Questions and medical prio
 			questions.forEach(question => {
 				const answerOption  = answers[question.id]
 				if (answerOption===undefined) {
@@ -42,7 +48,34 @@ class Evaluation {
 					note+="> " + answerValue.text + '\n'
 					medical_priority+=answerValue.value || 0
 				}
-			})
+			});
+
+			// Tags
+			tagParameters.forEach(t => {
+				let name = t.name;
+				let active = true;
+				let checked = false;
+				t.condition.forEach(c => {
+					// Check if key is in answers
+					let c_key = Object.keys(c)[0];
+					if(Object.keys(answers).includes(c_key)) {
+						checked = true;
+						if(c[c_key]!==answers[c_key]) {
+								active = false;
+						}
+					}
+				});
+				if(checked!=true) {
+					active = false;
+				}
+				if(active) {
+					if(!tags.includes(name)) {
+						tags.push(name);
+						// console.debug("Tag "+name+" active");
+					}
+				}
+			});
+			// End Tags
 			return {
 				note,
 				medical_priority,

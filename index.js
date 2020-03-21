@@ -105,7 +105,8 @@ app.post('/ticket', async (req, res) => {
 		res.json({
 			id: response.id,
 			priority: response.priority_id,
-			med_prio: response.med_prio
+			med_prio: response.med_prio,
+			tags: tags
 
 		})
 	} catch (error) {
