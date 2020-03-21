@@ -80,7 +80,7 @@ app.post('/ticket', async (req, res) => {
 
 		assert.ok(user.id, 'user creation failed');
 
-		const { medical_priority, note } = await eval.evaluate(answers)
+		const { medical_priority, note, tags } = await eval.evaluate(answers)
 
 		const response = await zammad.createTicket({
 			"title": "Rückrufwunsch Corona-Hotline Prio " + medical_priority,
@@ -96,6 +96,11 @@ app.post('/ticket', async (req, res) => {
 		})
 
 		assert.ok(response.id, 'ticket creation failed');
+
+		// Create Tags
+		for(t of tags) {
+			await zammad.addTag(response.id, t)
+		}
 
 		res.json({
 			id: response.id,

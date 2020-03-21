@@ -24,7 +24,8 @@ class Evaluation {
 	 */
 	async evaluate(answers) {
 		try {
-			const questions = await this.getQuestions()
+			const questions = await this.getQuestions();
+			let tags = [];
 			let note = ''
 			let medical_priority = 0
 			questions.forEach(question => {
@@ -45,6 +46,7 @@ class Evaluation {
 			return {
 				note,
 				medical_priority,
+				tags
 			};
 		} catch (err) {
 			console.error("Error getting Question Metadata!");

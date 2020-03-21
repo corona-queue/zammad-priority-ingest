@@ -1,4 +1,5 @@
 const superagent = require('superagent');
+const querystring = require("querystring");
 
 class Zammad {
 	constructor() {
@@ -27,6 +28,9 @@ class Zammad {
 		return this._post('v1/users', user)
 	}
 
+	addTag(ticketId, tag) {
+		return this._get('v1/tags/add?object=Ticket&o_id='+ticketId+'&item='+querystring.escape(tag))
+	}
 
 	listUsers() {
 		return this._get('v1/users')
