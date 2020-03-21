@@ -5,6 +5,8 @@ require('dotenv').config()
 const zammadClient = require('./zammad');
 const zammad = new zammadClient();
 const assert = require('assert')
+const Evaluation = require('./evaluation');
+const eval = new Evaluation();
 
 const app = express();
 app.use(express.json());
@@ -25,6 +27,7 @@ app.post('/ticket', async (req, res) => {
 		assert.ok(user, 'meta not present')
 		assert.ok(user.phone, 'phone not present')
 		user = await zammad.createUser(user)
+		eval.evaluate();
 		const response = await zammad.createTicket({
 			"title": "Ich brauche einen Test",
 			"group": "Users",
