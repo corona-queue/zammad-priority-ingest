@@ -2,7 +2,28 @@ const superagent = require('superagent');
 
 let tagParameters = [];
 // Influenza 1
-tagParameters.push({name: "Influenza", condition: [{"q31":"answer_yes"},{"q26":"answer_yes"}]});
+tagParameters.push({name: "Influenza", condition: [{"q31":"answer_yes"},{"q26":"answer_yes"},{"q32":"answer_no"}]});
+tagParameters.push({name: "Influenza", condition: [{"q31":"answer_yes"},{"q26":"answer_yes"}]}); // ToDo: Niesen Nein
+tagParameters.push({name: "Influenza", condition: [{"q31":"answer_yes"},{"q26":"answer_yes"},{"q25":"answer_yes"}]});
+tagParameters.push({name: "Influenza", condition: [{"q25":"answer_yes"},{"q21":"answer_yes"},{"q26":"answer_yes"}]});
+tagParameters.push({name: "Influenza", condition: [{"q25":"answer_yes"},{"q21":"answer_yes"},{"q31":"answer_yes"}]});
+
+// Erkältung
+ tagParameters.push({name: "Erkältung", condition: [{"q33":"answer_no"},{"q30":"answer_yes"}]}); // ToDo: Niesen Ja
+tagParameters.push({name: "Erkältung", condition: [{"q33":"answer_no"},{"q28":"answer_yes"}]}); // ToDo: Niesen Ja
+tagParameters.push({name: "Erkältung", condition: [{"q21":"answer_no"},{"q27":"answer_no"}]}); // ToDo: Niesen Ja
+// Dringlich
+tagParameters.push({name: "Dringlich", condition: [{"q21":"answer_yes"},{"q18":"answer_yes"}]}); // Evtl. q18 -> q19 wegen Verdachtsfall
+
+// Risikogruppen
+tagParameters.push({name: "Risikogruppe", condition: [{"q37":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q37":"answer_yes"}]}); // ToDo: Bluthochdruck only
+tagParameters.push({name: "Risikogruppe", condition: [{"q34":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q39":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q35":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q36":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q40":"answer_yes"}]});
+tagParameters.push({name: "Risikogruppe", condition: [{"q38":"answer_yes"}]});
 
 
 class Evaluation {
