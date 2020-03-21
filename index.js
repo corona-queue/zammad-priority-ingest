@@ -4,12 +4,14 @@ const jsonErrorHandler = require('express-json-error-handler').default;
 require('dotenv').config()
 const zammadClient = require('./zammad');
 const zammad = new zammadClient();
+const assert = require('assert')
 
 const app = express();
 app.use(express.json());
 app.use(jsonErrorHandler());
 
-zammad.listTickets()
+zammad.listUsers()
+.then(console.log)
 	.then(() => console.log('zammad works'));
 
 app.get('/', (req, res) => {
@@ -17,11 +19,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/ticket', async (req, res) => {
+
 	try {
-		const user = await zammad.createUser({
-			"firstname": "Bob",
-			"lastname": "Smith",
-		})
+		let user = req.body.meta
+		assert.ok(user, 'meta not present')
+		assert.ok(user.phone, 'phone not present')
+		user = await zammad.createUser(user)
 		const response = await zammad.createTicket({
 			"title": "Ich brauche einen Test",
 			"group": "Users",
