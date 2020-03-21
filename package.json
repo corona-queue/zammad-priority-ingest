@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/corona-queue/zammad-priority-ingest/issues"
   },
-  "homepage": "https://github.com/corona-queue/zammad-priority-ingest#readme"
+  "homepage": "https://github.com/corona-queue/zammad-priority-ingest#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
 }
