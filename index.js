@@ -26,6 +26,30 @@ app.get('/', (req, res) => {
  * POST with body:
  *
  * {
+ * 	 q1: "q1_option2",
+ * 	 q2: "q2_option0",
+ * 	 q3: "q3_option1",
+ * 	 ...
+ * }
+ */
+app.post('/evaluate', async (req, res) => {
+	let answers = req.body
+
+	try {
+		assert.ok(answers, 'answers not present')
+		const evaluation = await eval.evaluate(answers)
+		res.json(evaluation)
+	} catch (err) {
+		res.status(500).send(err.message)
+	}
+})
+
+/**
+ * Create new ticket
+ *
+ * POST with body:
+ *
+ * {
  * 	meta: {
  * 		firstname: string,
  * 		lastname: string,
@@ -59,7 +83,7 @@ app.post('/ticket', async (req, res) => {
 		const { medical_priority, note } = await eval.evaluate(answers)
 
 		const response = await zammad.createTicket({
-			"title": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
+			"title": "Rückrufwunsch Corona-Hotline Prio " + medical_priority,
 			"group": "Users",
 			"customer_id": user.id,
 			"article": {
@@ -81,7 +105,7 @@ app.post('/ticket', async (req, res) => {
 		})
 	} catch (error) {
 		console.error(error)
-		res.status(500).json({error: error.message});
+		res.status(500).json({ error: error.message });
 	}
 })
 

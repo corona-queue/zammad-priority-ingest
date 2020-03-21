@@ -33,11 +33,12 @@ class Evaluation {
 					// note+='  --- keine antwort --- \n'
 				} else {
 					note += question.text + '\n'
-					if(question.options[answerOption]===undefined){
+					const answerValue = question.options.filter(option=>option.id===answerOption)
+					if(answerValue===undefined){
 						throw Error('question definition does not have option '+ answerOption)
 					}
-					note+="> " + question.options[answerOption].text + '\n'
-					medical_priority+=question.options[answerOption].value || 0
+					note+="> " + answerValue.text + '\n'
+					medical_priority+=answerValue.value || 0
 				}
 			})
 			return {
