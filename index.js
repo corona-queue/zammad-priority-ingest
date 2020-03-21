@@ -4,6 +4,8 @@ const jsonErrorHandler = require('express-json-error-handler').default;
 require('dotenv').config()
 const zammadClient = require('./zammad');
 const zammad = new zammadClient();
+const Evaluation = require('./evaluation');
+const eval = new Evaluation();
 
 const app = express();
 app.use(express.json());
@@ -22,6 +24,7 @@ app.post('/ticket', async (req, res) => {
 			"firstname": "Bob",
 			"lastname": "Smith",
 		})
+		eval.evaluate();
 		const response = await zammad.createTicket({
 			"title": "Ich brauche einen Test",
 			"group": "Users",
