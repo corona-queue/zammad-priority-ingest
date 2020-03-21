@@ -20,9 +20,14 @@ class Evaluation {
 	evaluate(answers) {
 		this._getQuestions().then(() => {
 			console.log(this.questions);
+			const r = {};
+			r["note"] = "Schön formatierte Informationen";
+			r["medical_priority"] = 142;
+			return r;
 		}).catch((err) => {
 			console.error("Error getting Question Metadata!");
 			console.error(err);
+			throw Error(err);
 		});
 	}
 }
