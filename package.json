@@ -1,0 +1,19 @@
+{
+  "name": "@corona-queue/zammad-priority-ingest",
+  "version": "1.0.0",
+  "description": "Get's data from frontends, evalutates question answers, creates new ticket in zammad.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corona-queue/zammad-priority-ingest.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corona-queue/zammad-priority-ingest/issues"
+  },
+  "homepage": "https://github.com/corona-queue/zammad-priority-ingest#readme"
+}
