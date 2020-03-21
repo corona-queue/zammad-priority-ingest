@@ -9,11 +9,15 @@ class Evaluation {
 
 	_getQuestions() {
 		return superagent.get(this.question_url).then((res) => {
-			this.questions = res;
+			if(res.body) {
+				this.questions = res.body;
+			} else {
+				throw Error("Invalid question body");
+			}
 		});
 	}
 
-	evaluate(questions) {
+	evaluate(answers) {
 		this._getQuestions().then(() => {
 			console.log(this.questions);
 		}).catch((err) => {
