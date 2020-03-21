@@ -28,11 +28,11 @@ class Evaluation {
 			let note = ''
 			let medical_priority = 0
 			questions.forEach(question => {
-				note += question.text + '\n'
 				const answerOption  = answers[question.id]
 				if (answerOption===undefined) {
-					note+='  --- keine antwort --- \n'
+					// note+='  --- keine antwort --- \n'
 				} else {
+					note += question.text + '\n'
 					if(question.options[answerOption]===undefined){
 						throw Error('question definition does not have option '+ answerOption)
 					}
