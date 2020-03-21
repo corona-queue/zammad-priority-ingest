@@ -59,7 +59,7 @@ app.post('/ticket', async (req, res) => {
 		console.info(`medical score ${medical_priority}`)
 
 		const response = await zammad.createTicket({
-			"title": "Corona Test",
+			"title": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
 			"group": "Users",
 			"customer_id": user.id,
 			"article": {
@@ -71,7 +71,7 @@ app.post('/ticket', async (req, res) => {
 			med_prio: medical_priority,
 		})
 
-		console.log(response);
+		assert.ok(response.id, 'ticket creation failed');
 
 		res.json({
 			id: response.id,
