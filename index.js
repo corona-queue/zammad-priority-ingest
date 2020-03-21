@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
 
 /**
  * Create new ticket
- * 
+ *
  * POST with body:
- * 
+ *
  * {
  * 	meta: {
  * 		firstname: string,
@@ -52,6 +52,8 @@ app.post('/ticket', async (req, res) => {
 		assert.ok(user, 'meta not present')
 		assert.ok(user.phone, 'phone not present')
 		user = await zammad.createUser(user)
+
+		assert.ok(user.id, 'user creation failed');
 
 		const { medical_priority, note } = await eval.evaluate(answers)
 		console.info(`medical score ${medical_priority}`)
