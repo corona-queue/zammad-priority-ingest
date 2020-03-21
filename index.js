@@ -11,6 +11,7 @@ const eval = new Evaluation();
 const app = express();
 app.use(express.json());
 app.use(jsonErrorHandler());
+app.use(morgan('combined'));
 
 zammad.listUsers()
 	.then(() => console.log('zammad works'));
@@ -56,7 +57,6 @@ app.post('/ticket', async (req, res) => {
 		assert.ok(user.id, 'user creation failed');
 
 		const { medical_priority, note } = await eval.evaluate(answers)
-		console.info(`medical score ${medical_priority}`)
 
 		const response = await zammad.createTicket({
 			"title": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
@@ -75,7 +75,9 @@ app.post('/ticket', async (req, res) => {
 
 		res.json({
 			id: response.id,
-			priority: response.priority_id
+			priority: response.priority_id,
+			med_prio: response.med_prio
+
 		})
 	} catch (error) {
 		console.error(error)
