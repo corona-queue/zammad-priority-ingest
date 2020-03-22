@@ -62,6 +62,8 @@ class Evaluation {
 					// note+='  --- keine antwort --- \n'
 				} else {
 					note += question.text + '\n'
+					assert.ok(question.options, "question options not set");
+					assert.ok(question.options, "question options not set");
 					const answerValues = question.options.filter(option=>option.id===answerOption)
 					if(answerValues.length===undefined){
 						throw Error('question definition does not have option '+ answerOption)
