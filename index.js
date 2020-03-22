@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const jsonErrorHandler = require('express-json-error-handler').default;
 require('dotenv').config()
 const zammadClient = require('./zammad');
@@ -16,13 +17,7 @@ app.use(morgan('combined'));
 zammad.listUsers()
 	.then(() => console.log('zammad works'));
 
-app.use((req,res,next) => {
-		res.setHeader("Access-Control-Allow-Origin", "*");
-		res.setHeader("Access-Control-Allow-Credentials", "true");
-		res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-		res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-		next();
-});
+app.use(cors());
 
 app.get('/', (req, res) => {
 	res.json({});
@@ -40,6 +35,7 @@ app.get('/', (req, res) => {
  * 	 ...
  * }
  */
+app.options('/evaluate', cors()); // Pre-Flight
 app.post('/evaluate', async (req, res) => {
 	let answers = req.body
 
@@ -71,6 +67,7 @@ app.post('/evaluate', async (req, res) => {
  * 	}
  * }
  */
+app.options('/ticket', cors()); // Pre-Flight
 app.post('/ticket', async (req, res) => {
 
 	try {
