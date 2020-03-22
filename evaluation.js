@@ -27,7 +27,7 @@ tagParameters.push({ name: "Risikogruppe", condition: [{ "q40": "answer_yes" }] 
 tagParameters.push({ name: "Risikogruppe", condition: [{ "q38": "answer_yes" }] });
 
 // Information Only
-tagParameters.push({ name: "Information", condition: [{ "q00_a": "answer_yes" }, {"q00_b": "answer_no"}]});
+tagParameters.push({ name: "Information", condition: [{ "q00a": "answer_yes" }, {"q00b": "answer_no"}]});
 
 class Evaluation {
 	constructor() {
