@@ -27,6 +27,20 @@ app.get('/', (req, res) => {
 	res.json({});
 });
 
+if (process.env.ZAMMAD_DB_ENABLED) {
+	const zamamdDB = require('./zammad.db')
+	const db = new zamamdDB()
+	app.get('/ticket/:id', async (req, res) => {
+		const ticketId = req.params.id
+		const position = await db.getPosition(ticketId)
+		res.json({ ticketId, position })
+	})
+} else {
+	app.get('/ticket/:id', async (req, res) => {
+		res.status(500).send('Position query not enabled')
+	})
+}
+
 /**
  * Create new ticket
  *
@@ -91,10 +105,10 @@ app.post('/ticket', async (req, res) => {
 
 		const { medical_priority, note, tags } = await eval.evaluate(answers)
 		let priority = "1 low";
-		if(medical_priority>prio_medium) {
+		if (medical_priority > prio_medium) {
 			priority = "2 medium";
 		}
-		if(medical_priority > prio_high) {
+		if (medical_priority > prio_high) {
 			priority = "3 high";
 		}
 		const response = await zammad.createTicket({
@@ -103,7 +117,7 @@ app.post('/ticket', async (req, res) => {
 			"customer_id": user.id,
 			"priority_id": priority,
 			"article": {
-				"subject": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
+				"subject": "Rückrufwunsch Corona-Hotline Prio " + medical_priority,
 				"body": note,
 				"type": "note",
 				"internal": false
@@ -114,7 +128,7 @@ app.post('/ticket', async (req, res) => {
 		assert.ok(response.id, 'ticket creation failed');
 
 		// Create Tags
-		for(t of tags) {
+		for (t of tags) {
 			await zammad.addTag(response.id, t)
 		}
 
