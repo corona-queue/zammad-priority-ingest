@@ -9,6 +9,10 @@ const assert = require('assert')
 const Evaluation = require('./evaluation');
 const eval = new Evaluation();
 
+// Prio definition
+const prio_medium = 16;
+const prio_high = 21;
+
 const app = express();
 app.use(express.json());
 app.use(jsonErrorHandler());
@@ -86,11 +90,18 @@ app.post('/ticket', async (req, res) => {
 		assert.ok(user.id, 'user creation failed');
 
 		const { medical_priority, note, tags } = await eval.evaluate(answers)
-
+		let priority = "1 low";
+		if(medical_priority>prio_medium) {
+			priority = "2 medium";
+		}
+		if(medical_priority > prio_high) {
+			priority = "3 high";
+		}
 		const response = await zammad.createTicket({
 			"title": "Rückrufwunsch Corona-Hotline Prio " + medical_priority,
 			"group": "Users",
 			"customer_id": user.id,
+			"priority_id": priority,
 			"article": {
 				"subject": "Rückrufwunsch Corona-Hotline Prio "+medical_priority,
 				"body": note,
