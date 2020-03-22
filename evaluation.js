@@ -68,7 +68,6 @@ class Evaluation {
 				if (answerOption === undefined) {
 					// note+='  --- keine antwort --- \n'
 				} else {
-					note += question.text + '\n'
 					if (question.options === null) {
 						if (typeof answerOption === 'string' && Date.parse(answerOption)) {
 							// answer option is date
@@ -87,9 +86,12 @@ class Evaluation {
 					if (answerValues.length === undefined) {
 						throw Error('question definition does not have option ' + answerOption)
 					}
-					const answerValue = answerValues[0]
-					note += "> " + answerValue.text + '\n'
-					medical_priority += answerValue.value || 0
+					if(!question.hidden) {
+						const answerValue = answerValues[0]
+						note += question.text + '\n'
+						note += "> " + answerValue.text + '\n'
+						medical_priority += answerValue.value || 0
+					}
 				}
 			});
 
