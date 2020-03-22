@@ -1,4 +1,5 @@
 const superagent = require('superagent');
+const assert = require('assert');
 
 let tagParameters = [];
 // Influenza 1
