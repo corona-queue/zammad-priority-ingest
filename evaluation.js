@@ -13,8 +13,12 @@ tagParameters.push({ name: "Influenza", condition: [{ "q25": "answer_yes" }, { "
 tagParameters.push({name: "Erkältung", condition: [{ "q33": "answer_no" }, { "q30": "answer_yes" }, { "q50": "answer_yes" }] });
 tagParameters.push({name: "Erkältung", condition: [{ "q33": "answer_no" }, { "q28": "answer_yes" }, { "q50": "answer_yes" }] });
 tagParameters.push({name: "Erkältung", condition: [{ "q21": "answer_no" }, { "q27": "answer_no" }, { "q50": "answer_yes" }] });
+
 // Dringlich
 tagParameters.push({ name: "Dringlich", condition: [{ "q21": "answer_yes" }, { "q18": "answer_yes" }] }); // Evtl. q18 -> q19 wegen Verdachtsfall
+
+//ärztlicher Rat
+tagParameters.push({ name: "ärztlicher Rat", condition: [{ "q51": "answer_yes" }] });
 
 // Risikogruppen
 tagParameters.push({ name: "Risikogruppe", condition: [{ "q37": "answer_yes" }] });
