@@ -4,7 +4,7 @@ const assert = require('assert');
 let tagParameters = [];
 // Influenza 1
 tagParameters.push({ name: "Influenza", condition: [{ "q31": "answer_yes" }, { "q26": "answer_yes" }, { "q32": "answer_no" }] });
-tagParameters.push({ name: "Influenza", condition: [{ "q31": "answer_yes" }, { "q26": "answer_yes" }, { "q50":"answer_yes" }] });
+tagParameters.push({ name: "Influenza", condition: [{ "q31": "answer_yes" }, { "q26": "answer_yes" }, { "q50":"answer_no" }] });
 tagParameters.push({ name: "Influenza", condition: [{ "q31": "answer_yes" }, { "q26": "answer_yes" }, { "q25": "answer_yes" }] });
 tagParameters.push({ name: "Influenza", condition: [{ "q25": "answer_yes" }, { "q21": "answer_yes" }, { "q26": "answer_yes" }] });
 tagParameters.push({ name: "Influenza", condition: [{ "q25": "answer_yes" }, { "q21": "answer_yes" }, { "q31": "answer_yes" }] });
