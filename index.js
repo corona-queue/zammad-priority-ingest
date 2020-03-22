@@ -16,7 +16,7 @@ app.use(morgan('combined'));
 zammad.listUsers()
 	.then(() => console.log('zammad works'));
 
-app.use((req,res,next) 0> {
+app.use((req,res,next) => {
 		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Allow-Credentials", "true");
 		res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
